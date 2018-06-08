@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <h1>The List</h1>
-    <input class="create" type="text" v-model="todo" @keyup.enter="createTodo">
+    <input class="create" type="text" v-model="todo" @keyup.enter="createTodo" placeholder="What to do NEXT?">
     <ul>
       <li 
         v-for="todo in todos" :key="todo"
@@ -20,9 +20,12 @@
         <button class="delete" @click="deleteTodo(todo)"></button>
       </li>
     </ul>
-    <button @click="mode = 2">all</button>
-    <button @click="mode = false">active</button>
-    <button @click="mode = true">completed</button>
+    <div class="buttonPallete">
+      <button @click="mode = 2">all</button>
+      <button @click="mode = false">active</button>
+      <button @click="mode = true">completed</button>
+    </div>
+    
   </div>
 </template>
 
@@ -94,10 +97,18 @@ h1 {
   font-stretch: ultra-expanded;
 }
 .create {
+  box-shadow: 2px 2px 4px solid grey;
   width: 60%;
+  border: 1px solid grey;
   height: 15vh;
   font-size: 3em;
   text-align: center;
+  color: black;
+  -webkit-user-select: none;
+  user-select: none;
+}
+.create::-webkit-input-placeholder {
+  color: rgba(100, 100, 100, 0.3);
 }
 ul {
   margin: 0;
