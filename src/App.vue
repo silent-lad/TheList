@@ -3,29 +3,25 @@
     <h1>The List</h1>
     <input class="create" type="text" v-model="todo" @keyup.enter="createTodo" placeholder="What to do NEXT?">
     <ul>
-      <li 
-        v-for="todo in todos" :key="todo"
-        v-if="todo.status == mode"
-        :class="{active: todo.status==false,completed: todo.status==true}">
-        <input type="checkbox" v-model="todo.status">
-            {{ todo.title }} 
-        <button @click="deleteTodo(todo)"></button>
+      <li v-for="(todo,key) in todos" :key="key" v-if="todo.status == mode" :class="{active: todo.status==false,completed: todo.status==true}" @dblclick="toggleTodo(todo)">
+        <input class="iscomplete check" type="checkbox" v-model="todo.status">
+        <!-- <span style="float: left;">{{++key}}.</span> -->
+        {{ todo.title }}
+        <button class="delete" @click="deleteTodo(todo)"></button>
       </li>
-      <li 
-        v-for="todo in todos" :key="todo"
-        v-if="mode===2"
-        :class="{active: todo.status==false,completed: todo.status==true}">
-        <input class="iscomplete" type="checkbox" v-model="todo.status" @click="toggleTodo(todo)">
-            {{ todo.title }} 
+      <li v-for="(todo,key) in todos" :key="key" v-if="mode===2" :class="{active: todo.status==false,completed: todo.status==true}" @dblclick="toggleTodo(todo)">
+        <!-- <input class="iscomplete check" type="checkbox" v-model="todo.status" @click="toggleTodo(todo)"> -->
+        <!-- <span style="float: left;">{{++key}}.</span> -->
+        {{ todo.title }}
         <button class="delete" @click="deleteTodo(todo)"></button>
       </li>
     </ul>
     <div class="buttonPallete">
-      <button @click="mode = 2">all</button>
-      <button @click="mode = false">active</button>
-      <button @click="mode = true">completed</button>
+      <button class="btn-special" @click="mode = 2">all</button>
+      <button class="btn-special" @click="mode = false">active</button>
+      <button class="btn-special" @click="mode = true">completed</button>
     </div>
-    
+
   </div>
 </template>
 
@@ -89,37 +85,75 @@ export default {
 </script>
 
 <style>
+html,
+body {
+  background-color: black;
+  color: white;
+}
 .container {
   text-align: center;
+}
+
+.delete {
+  background-color: black;
+  border: 2px solid white;
+  /* padding: 15px 32px; */
+  margin-top: 2px;
 }
 h1 {
   font-size: 5em;
   font-stretch: ultra-expanded;
 }
-.create {
-  box-shadow: 2px 2px 4px solid grey;
+input[type="text"] {
+  background-color: black;
   width: 60%;
-  border: 1px solid grey;
-  height: 15vh;
+  height: 50%;
   font-size: 3em;
   text-align: center;
-  color: black;
-  -webkit-user-select: none;
-  user-select: none;
+  color: white;
+  outline: none;
+  border-top: 0;
+  border-right: 0;
+  border-bottom: 5px solid white;
+  border-left: 0;
+  margin-bottom: 50px;
 }
-.create::-webkit-input-placeholder {
-  color: rgba(100, 100, 100, 0.3);
+input[type="text"]:focus {
+  outline: none;
 }
+.btn-special {
+  background-color: grey;
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  /* text-decoration: none; */
+  display: inline-block;
+  font-size: 16px;
+  margin: 10px;
+  box-shadow: 2px 2px 4px white;
+  transition: 0.3s all;
+}
+.btn-special:focus {
+  outline: none;
+  /* transform: translate(2px, 2px); */
+  /* box-shadow: none; */
+  background-color: #333;
+}
+.btn-special:hover {
+  transform: translate(-2px, -2px);
+}
+
 ul {
   margin: 0;
   padding: 0;
 }
 li {
   width: 60%;
-  height: 12vh;
+  height: 10vh;
   list-style: none;
   font-size: 3em;
-  border: 1px solid grey;
+  /* border: 1px solid grey; */
   margin: 0px auto;
   padding: 0px;
 }
