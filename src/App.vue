@@ -1,25 +1,29 @@
 <template>
   <div class="container">
-    <h1>The List</h1>
-    <input class="create" type="text" v-model="todo" @keyup.enter="createTodo" placeholder="What to do NEXT?">
-    <ul>
-      <li v-for="(todo,key) in todos" :key="key" v-if="todo.status == mode" :class="{active: todo.status==false,completed: todo.status==true}" @dblclick="toggleTodo(todo)">
-        <input class="iscomplete check" type="checkbox" v-model="todo.status">
-        <!-- <span style="float: left;">{{++key}}.</span> -->
-        {{ todo.title }}
-        <button class="delete" @click="deleteTodo(todo)"></button>
-      </li>
-      <li v-for="(todo,key) in todos" :key="key" v-if="mode===2" :class="{active: todo.status==false,completed: todo.status==true}" @dblclick="toggleTodo(todo)">
-        <!-- <input class="iscomplete check" type="checkbox" v-model="todo.status" @click="toggleTodo(todo)"> -->
-        <!-- <span style="float: left;">{{++key}}.</span> -->
-        {{ todo.title }}
-        <button class="delete" @click="deleteTodo(todo)"></button>
-      </li>
-    </ul>
-    <div class="buttonPallete">
-      <button class="btn-special" @click="mode = 2">all</button>
-      <button class="btn-special" @click="mode = false">active</button>
-      <button class="btn-special" @click="mode = true">completed</button>
+    <input type="text" v-model="pass" @keyup.enter="passwordCheck(pass)" v-show="!admin">
+    <div class="protect" v-show="admin">
+      <h1>The List</h1>
+      <input class="create" type="text" v-model="todo" @keyup.enter="createTodo" placeholder="What to do NEXT?">
+      <ul>
+        <li v-for="(todo,key) in todos" :key="key" v-if="todo.status == mode" :class="{active: todo.status==false,completed: todo.status==true}" @dblclick="toggleTodo(todo)">
+          <input class="iscomplete check" type="checkbox" v-model="todo.status">
+          <!-- <span style="float: left;">{{++key}}.</span> -->
+          <span class="item">{{ todo.title }}</span>
+
+          <button class="delete" @click="deleteTodo(todo)"></button>
+        </li>
+        <li v-for="(todo,key) in todos" :key="key" v-if="mode===2" :class="{active: todo.status==false,completed: todo.status==true}" @dblclick="toggleTodo(todo)">
+          <!-- <input class="iscomplete check" type="checkbox" v-model="todo.status" @click="toggleTodo(todo)"> -->
+          <!-- <span style="float: left;">{{++key}}.</span> -->
+          <span class="item">{{ todo.title }}</span>
+          <button class="delete" @click="deleteTodo(todo)"></button>
+        </li>
+      </ul>
+      <div class="buttonPallete">
+        <button class="btn-special" @click="mode = 2">all</button>
+        <button class="btn-special" @click="mode = false">active</button>
+        <button class="btn-special" @click="mode = true">completed</button>
+      </div>
     </div>
 
   </div>
@@ -32,7 +36,10 @@ export default {
     return {
       todo: "",
       mode: 2,
-      todos: []
+      todos: [],
+      password: "dinopanda",
+      pass: "",
+      admin: false
     };
   },
   watch: {
@@ -46,6 +53,11 @@ export default {
     }
   },
   methods: {
+    passwordCheck: function(pass) {
+      if (pass == this.password) {
+        this.admin = true;
+      }
+    },
     createTodo: function() {
       var newTodo = this.todo;
       this.todos.push({
@@ -121,6 +133,7 @@ input[type="text"] {
 input[type="text"]:focus {
   outline: none;
 }
+
 .btn-special {
   background-color: grey;
   border: none;
@@ -149,7 +162,8 @@ ul {
   padding: 0;
 }
 li {
-  width: 60%;
+  overflow-y: auto;
+  width: 100%;
   height: 10vh;
   list-style: none;
   font-size: 3em;
