@@ -163,13 +163,13 @@ ul {
 }
 li {
   overflow-y: auto;
-  width: 100%;
-  height: 10vh;
+  width: 60%;
   list-style: none;
   font-size: 3em;
-  /* border: 1px solid grey; */
+  border: 1px solid grey;
+  box-shadow: 2px 2px 2p #999;
   margin: 0px auto;
-  padding: 0px;
+  padding: 10px;
 }
 .iscomplete {
   float: left;
