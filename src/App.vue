@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <input type="text" v-model="pass" @keyup.enter="passwordCheck(pass)" v-show="!admin">
+    <!-- <input type="text" v-model="pass" @keyup.enter="passwordCheck(pass)" v-show="!admin"> -->
     <div class="protect" v-show="admin">
       <h1>The List</h1>
       <input class="create" type="text" v-model="todo" @keyup.enter="createTodo" placeholder="What to do NEXT?">
@@ -37,9 +37,9 @@ export default {
       todo: "",
       mode: 2,
       todos: [],
-      password: "dinopanda",
+      // password: "dinopanda",
       pass: "",
-      admin: false
+      admin: true
     };
   },
   watch: {
